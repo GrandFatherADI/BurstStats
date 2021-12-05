@@ -1,8 +1,10 @@
 
   # Burst Stats
 
-**Burst Stats** is a Logic2 extension that adds simple burst statistics
-to digital measurements.
+**Burst Stats** is a Logic2 extension that adds simple periodic burst statistics
+to digital measurements. This is useful for checking sample timing of an ADC by
+looking at the SPI clock activity bursts for example and similar processes where
+a burst of activity is a good proxy for an event of interest.
 
 ![](BurstStatsSample.png)
 
@@ -10,6 +12,7 @@ to digital measurements.
 
 Install **BurstStats** by clicking "Install" on the **Burst Stats** entry in the
 Extensions panel.
+
 
 To add a measurement you can:
 
