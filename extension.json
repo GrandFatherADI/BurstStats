@@ -1,0 +1,40 @@
+{
+  "name": "Burst Stats",
+  "apiVersion": "1.0.0",
+  "author": "Peter Jaquiery",
+  "version": "1.0.0",
+  "description": "Calculate min, mean and max cycle period stats",
+  "extensions": {
+    "BurstStats": {
+      "type": "DigitalMeasurement",
+      "entryPoint": "BurstStats.BurstStatsMeasurer",
+      "metrics": {
+        "pPMin": {
+          "name": "Min Period",
+          "notation": "P<sub>min</sub>",
+          "units": "s"
+        },
+        "pPMean": {
+          "name": "Mean Period",
+          "notation": "P<sub>mean</sub>",
+          "units": "s"
+        },
+        "pPSDev": {
+          "name": "Period Std Dev",
+          "notation": "P<sub>SDev</sub>",
+          "units": "s"
+        },
+        "pPMax": {
+          "name": "Max Period",
+          "notation": "P<sub>max</sub>",
+          "units": "s"
+        },
+        "pBursts": {
+          "name": "Bursts count",
+          "notation": "Count",
+          "units": ""
+        }
+      }
+    }
+  }
+}
