@@ -54,10 +54,12 @@ class BurstStatsMeasurer(DigitalMeasurer):
         self.periods = 0
 
         # 'User' parameters
-        self.kMinPeriod = 4e-6    # minimum time with no edges between bursts
 
-        # Set wantedState True (rising edge), False (falling edge) or None
-        self.wantedState = False
+        # minimum time with no edges between bursts
+        self.kMinPeriod = 4e-6
+
+        # Set kWantedState True (rising edge), False (falling edge) or None
+        self.kWantedState = None
 
     '''
     process_data() will be called one or more times per measurement with batches
@@ -76,7 +78,7 @@ class BurstStatsMeasurer(DigitalMeasurer):
     def process_data(self, data):
 
         for t, bitstate in data:
-            if not self.wantedState is None and bitstate != self.wantedState:
+            if not self.kWantedState is None and bitstate != self.kWantedState:
                 # Wrong edge type. Skip
                 continue
 

@@ -1,19 +1,25 @@
 
   # Burst Stats
+**Burst Stats** is a Logic2 digital measurement
+extension that adds simple
+periodic burst statistics to digital measurements. This is useful for checking
+sample timing of an ADC by looking at the SPI clock activity bursts for example
+and similar processes where a burst of activity is a good proxy for an event of
+interest.
 
-**Burst Stats** is a Logic2 extension that adds simple periodic burst statistics
-to digital measurements. This is useful for checking sample timing of an ADC by
-looking at the SPI clock activity bursts for example and similar processes where
-a burst of activity is a good proxy for an event of interest.
+Two user parameters are embedded in BurstStats.py. __*self.kMinPeriod is critical
+to the use of Burst Stats*__ and self.kWantedState may be useful in some cases.
+__*See instructions below*__ for use of these parameters.
 
 ![](BurstStatsSample.png)
 
 ## Instructions
 
+### Installation
 Install **BurstStats** by clicking "Install" on the **Burst Stats** entry in the
 Extensions panel.
 
-
+### Measurement management
 To add a measurement you can:
 
 1. Click on the Measurements "+" icon in the "Annotations panel", then click on
@@ -29,3 +35,18 @@ Show the measurement popup dialog for a selection by clicking on the selection.
 You may also view measurement data by opening the measurement pane by clicking
 on the ruler icon in the right hand side panel buttons area.
 
+### User Parameters
+
+Two user parameters are embedded in the Python source for **Burst Stats**:
+
+- **self.kMinPeriod**: the "idle" period between bursts. This is used to identify
+the bursts of interest by identifying the minimum idle period between them.
+- **self.kWantedState**: used to control significal edge detection. Usually
+this isn't important, but it can help where a burst is deemed to start on either
+a rising (set True) or falling (set False) edge. The default value is None.
+
+Unfortunately at present these can only be manipulated through the extension
+source code. On Windows the code may be found in
+_%appdata%\Logic\Marketplace\xxx_. 'xxx' is a number assigned by Logic2 when the
+extension is installed (64 in my case). I'd appreciate other users letting me
+know where Logic2 puts extension source on other systems.
