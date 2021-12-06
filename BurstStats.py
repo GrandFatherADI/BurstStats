@@ -46,7 +46,7 @@ class BurstStatsMeasurer(DigitalMeasurer):
         self.pPMin = None
         self.pPMean = 0.0
         self.pPMax = None
-        self.lastState = None
+        self.started = False
         self.burstStart = None
         self.lastEdge = None
         self.PSDev = RunningSD()
@@ -82,37 +82,38 @@ class BurstStatsMeasurer(DigitalMeasurer):
                 # Wrong edge type. Skip
                 continue
 
-            if self.lastState is None:
-                self.lastState = bitstate
+            if not self.started:
+                # First wanted edge in the measurement region
+                self.started = True
                 self.lastEdge = t
                 self.burstStart = t
                 self.periods = 0
 
-                # Can't generate stats for the first Burst
+                # Can't generate stats for the first edge
                 continue
 
             timeDelta = float(t - self.lastEdge)
             self.lastEdge = t
 
             if timeDelta < self.kMinPeriod:
-                # We need the time from the last Burst to be at least
-                # self.kMinPeriod to accept this Burst as the start of a new
+                # We need the time from the last edge to be at least
+                # self.kMinPeriod to accept this edge as the start of a new
                 # burst
                 continue
 
-            # high going Edge. End/Start of a burst
-            timeDelta = float(t - self.burstStart)
+            # Wanted edge edge following an idle period. End/Start of a burst
+            burstDelta = float(t - self.burstStart)
             self.burstStart = t
-
-            self.pPMean += timeDelta
-            self.PSDev.add(timeDelta)
             self.periods += 1
 
-            if self.pPMin == None or timeDelta < self.pPMin:
-                self.pPMin = timeDelta
+            self.pPMean += burstDelta
+            self.PSDev.add(burstDelta)
 
-            if self.pPMax == None or timeDelta > self.pPMax:
-                self.pPMax = timeDelta
+            if self.pPMin == None or burstDelta < self.pPMin:
+                self.pPMin = burstDelta
+
+            if self.pPMax == None or burstDelta > self.pPMax:
+                self.pPMax = burstDelta
 
     '''
     measure(...) is called after all the relevant data has been processed by
@@ -126,7 +127,7 @@ class BurstStatsMeasurer(DigitalMeasurer):
             values['pPMean'] = self.pPMean / self.periods
             values['pPMax'] = self.pPMax
             values['pPSDev'] = self.PSDev.StdDev()
-            values['pBursts'] = self.periods + 1
+            values['pBursts'] = self.periods
         else:
             values['pPMin'] = 0
             values['pPMean'] = 0
