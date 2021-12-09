@@ -1,5 +1,4 @@
-
-  # Burst Stats
+# Burst Stats
 **Burst Stats** is a Logic2 digital measurement
 extension that adds simple
 periodic burst statistics to digital measurements. This is useful for checking
@@ -7,8 +6,12 @@ sample timing of an ADC by looking at the SPI clock activity bursts for example
 and similar processes where a burst of activity is a good proxy for an event of
 interest.
 
-Two user parameters are embedded in BurstStats.py. __*self.kMinPeriod is critical
-to the use of Burst Stats*__ and self.kWantedState may be useful in some cases.
+Burst Stats can also be used to generate simple cycle period stats for pulse
+trains. Set _kMinPeriod_ (see below) to somewhat less than the minimum expected
+cycle time and _kWantedState_ to _None_.
+
+Two user parameters are embedded in BurstStats.py. __*kMinPeriod is critical
+to the use of Burst Stats*__ and kWantedState may be useful in some cases.
 __*See instructions below*__ for use of these parameters.
 
 ![](BurstStatsSample.png)
@@ -37,16 +40,26 @@ on the ruler icon in the right hand side panel buttons area.
 
 ### User Parameters
 
-Two user parameters are embedded in the Python source for **Burst Stats**:
+Two user parameters are embedded in the Python source at the top of the file for
+**Burst Stats**:
 
-- **self.kMinPeriod**: the "idle" period between bursts. This is used to identify
+- **kMinPeriod**: the "idle" period between bursts. This is used to identify
 the bursts of interest by identifying the minimum idle period between them.
-- **self.kWantedState**: used to control significal edge detection. Usually
+- **kWantedState**: is used to control significant edge detection. Usually
 this isn't important, but it can help where a burst is deemed to start on either
-a rising (set True) or falling (set False) edge. The default value is None.
+a rising (set True) or falling (set False) edge. The default value is None
+(either edge).
 
 Unfortunately at present these can only be manipulated through the extension
 source code. On Windows the code may be found in
 _%appdata%\Logic\Marketplace\xxx_. 'xxx' is a number assigned by Logic2 when the
 extension is installed (64 in my case). I'd appreciate other users letting me
 know where Logic2 puts extension source on other systems.
+
+### Feedback and Issues
+
+Issues and feature requests should be raised on GitHub using
+https://github.com/GrandFatherADI/BurstStats/issues/new.
+
+Public feedback can be provided on Saleae's [Extensions discussion
+forum](https://discuss.saleae.com/c/hlas-measurements-other/9).

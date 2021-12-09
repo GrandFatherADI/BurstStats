@@ -1,6 +1,15 @@
 from saleae.range_measurements import DigitalMeasurer
 from math import sqrt
 
+# 'User' parameters
+
+# minimum time with no edges between bursts
+kMinPeriod = 1.0e-6
+
+# Set kWantedState True (rising edge), False (falling edge) or None
+kWantedState = False
+
+
 class RunningSD:
     def __init__(self):
         self.n = 0
@@ -53,14 +62,6 @@ class BurstStatsMeasurer(DigitalMeasurer):
         self.LSDev = RunningSD()
         self.periods = 0
 
-        # 'User' parameters
-
-        # minimum time with no edges between bursts
-        self.kMinPeriod = 4e-6
-
-        # Set kWantedState True (rising edge), False (falling edge) or None
-        self.kWantedState = None
-
     '''
     process_data() will be called one or more times per measurement with batches
     of data.
@@ -78,7 +79,7 @@ class BurstStatsMeasurer(DigitalMeasurer):
     def process_data(self, data):
 
         for t, bitstate in data:
-            if not self.kWantedState is None and bitstate != self.kWantedState:
+            if kWantedState is not None and bitstate != kWantedState:
                 # Wrong edge type. Skip
                 continue
 
@@ -95,9 +96,9 @@ class BurstStatsMeasurer(DigitalMeasurer):
             timeDelta = float(t - self.lastEdge)
             self.lastEdge = t
 
-            if timeDelta < self.kMinPeriod:
+            if timeDelta < kMinPeriod:
                 # We need the time from the last edge to be at least
-                # self.kMinPeriod to accept this edge as the start of a new
+                # kMinPeriod to accept this edge as the start of a new
                 # burst
                 continue
 
