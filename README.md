@@ -53,8 +53,11 @@ a rising (set True) or falling (set False) edge. The default value is None
 Unfortunately at present these can only be manipulated through the extension
 source code. On Windows the code may be found in
 _%appdata%\Logic\Marketplace\xxx_. 'xxx' is a number assigned by Logic2 when the
-extension is installed (64 in my case). I'd appreciate other users letting me
-know where Logic2 puts extension source on other systems.
+extension is installed (64 in my case). On Linux the code directory is
+_~/.config/Logic/Marketplace/xxx/_. I'd appreciate other users letting me know
+where Logic2 puts extension source on other systems.
+
+**BurstStats** must be disabled then enabled for new settings to take effect.
 
 ### Feedback and Issues
 

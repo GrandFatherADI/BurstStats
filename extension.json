@@ -2,7 +2,7 @@
   "name": "Burst Stats",
   "apiVersion": "1.0.0",
   "author": "Peter Jaquiery",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Calculate min, mean and max cycle period stats",
   "extensions": {
     "BurstStats": {
